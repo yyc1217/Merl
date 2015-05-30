@@ -1,0 +1,138 @@
+@white: #FFFFFF;
+@attention-color: rgba(238, 47, 47, 0.85);
+
+.attention {
+	animation: flash 5s;
+}
+
+.attention-2s {
+	animation: flash 2s;
+}
+
+@keyframes flash {
+    0% {
+        background-color: @white;
+    }
+    50% {
+        background-color: @attention-color;
+    }
+    100% {
+        background-color: @white;
+    }
+}
+
+.table th, .table td {
+	text-align: center;
+}
+
+.candidate {
+	&:hover {
+		background-color: #dddddd;
+	}
+	
+	&.chosenable {
+		cursor: pointer;
+	}
+	
+	&.picked {
+		.attention;
+		color: @white;
+		
+		&:hover {
+			background-color: @white;
+		}
+	}
+}
+
+#result {
+	& .picked {
+		.attention;
+	}
+}
+
+#ballot {
+	text-align:center;
+}
+
+#clock {
+	font-size: 30px;
+}
+
+#bulletin {
+	max-height: 1.5em;
+	font-size: 16px;
+
+	& span {
+		.attention-2s;
+	}
+}
+
+.overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	buttom: 0px;
+	z-index: 5;
+	width: 100%;
+	height: 100%;
+}
+
+#pastResult {
+	z-index: 10;
+}
+
+.flex-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.manager-team-container:extend(.flex-container) {
+}
+
+@manager-team-item-height:100px;
+.manager-team-item {
+	height : @manager-team-item-height;
+	line-height : @manager-team-item-height;
+	text-align: center;
+	width: 90%;
+	margin: 7px 0;
+	font-size: 50px;
+}
+
+@media all and (max-width: 330px) {
+	
+	.container {
+		margin-bottom: 60px;
+	}
+	
+	.flex-container {
+		flex-direction: row;
+		align-items: stretch;
+		justify-content: space-around;
+		margin-bottom: -20px;
+	}
+	
+	.footer {
+		position: fixed;
+		bottom: 0px;
+		right: 0px;
+		left: 0px;
+		backgroun-color: @white;
+		width: 100%;
+		
+		& > .panel {
+			box-shadow: 0px 1px 10px;
+		}
+	}
+	
+	.kkcountdown-box {
+		font-size: 22px;
+	}
+	
+	.bulletin {
+		padding-left: 10px;
+	}
+}

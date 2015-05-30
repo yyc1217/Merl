@@ -1,0 +1,31 @@
+<div class="overlay" style="display:none;">
+	<div class=container style="margin-top: 30px;">
+		<div class=row>
+			<div class="col-md-8 col-md-offset-2">
+				<div id=pastResult class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title"><%= latestDraftTime %> 模擬選秀結果</h3>
+					</div>
+					<table class="table table-bordered">
+						<tr>
+							<th></th>
+							<% _.each(teams, function (team) { %>
+								<th><%= team.cname %></th>
+							<% });%>
+						</tr>
+						
+						<% var j; %>
+						<% for (j = 1; j <= latestDraftResult.maxRound; j++) { %>
+							<tr>
+								<th>第<%= j %>輪</th>
+								<% _.each(teams, function (team) { %>
+									<td class="<%= team.ename %>"><%= latestDraftResult[team.ename] && latestDraftResult[team.ename][j] && latestDraftResult[team.ename][j][0].name || '' %></td>
+								<% });%>
+							</tr>
+						<% }; %>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
