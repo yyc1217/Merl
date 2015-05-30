@@ -65,23 +65,20 @@ var ResultView = Backbone.View.extend({
 		Merl.dispatcher.on('pick:result', this.refresh, this);
     },
 	refresh: function(data) {
-		var count = data.count - 1;
-		var name = data.name;
-		this.add(count, name);
-
-		this.fixIfMissing(count);
+		this.add(data.team, data.round, data.name);
+		this.fixIfMissing(data.count - 1);
 	},
 
-	add: function (count, name) {
-		this.$el.find('td:nth(' + count + ')').addClass('picked').text(name);
+	add: function (team, round, name) {
+		this.$el.find('td[team=' + team + '][round=' + round + ']').addClass('picked').text(name);
 	},
 
 	fixIfMissing: function(count) {
 		var missings = [];
 		var self = this;
 		
-		$('#result td').each(function(i, v) {
-			if (i < count && v.textContent === '') {
+		$('#result td:lt(' + count + ')').each(function(i, v) {
+			if (v.textContent === '') {
 				missings.push({
 					team : v.getAttribute('team'),
 					round : v.getAttribute('round')
@@ -94,7 +91,7 @@ var ResultView = Backbone.View.extend({
 				io.socket.get('/pick/missing', missing, function (resData) {
 					console.log('missing result', resData);
 					if (resData !== 'fail') {
-						self.add(missing.round, resData.name);
+						self.add(resData.team, resData.round, resData.name);
 					}
 				});	
 			});
