@@ -36,6 +36,7 @@ module.exports.routes = {
   'GET /hello' : 'IndexController.hello',
   
   'POST /pick': 'PickController.create',
+  'GET /pick/missing': 'PickController.missing',
   
   '/login' : 'AuthController.index',
   '/logout' : 'AuthController.logout',

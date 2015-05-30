@@ -71,14 +71,34 @@ var ResultView = Backbone.View.extend({
 
 		this.fixIfMissing(count);
 	},
-	add: function (count, data) {
+
+	add: function (count, name) {
 		this.$el.find('td:nth(' + count + ')').addClass('picked').text(name);
 	},
+
 	fixIfMissing: function(count) {
-		var missingResults = this.$el.find('td:nth(' + count + ')').prevAll().filter(function() {
-			return $(this).text() !== '';
+		var missings = [];
+		var self = this;
+		
+		$('#result td').each(function(i, v) {
+			if (i < count && v.textContent === '') {
+				missings.push({
+					team : el.getAttribute('team'),
+					round : el.getAttribute('round')
+				});
+			}
 		});
-		console.log('missingResults', missingResults);
+		
+		if (missings.length) {
+			missings.forEach(function(missing) {
+				io.socket.get('/pick/missing', missing, function (resData) {
+					console.log('missing result', resData);
+					if (resData !== 'fail') {
+						self.add(resData.count, resData.name);
+					}
+				});	
+			});
+		}
 	}
 });
 

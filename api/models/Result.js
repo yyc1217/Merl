@@ -32,6 +32,19 @@ module.exports = {
 
 		/* 被選的人 */
 		name : 'string'
+	},
+	
+	/**
+		補遺
+	*/
+	findLatestByMissing : function(missing, cb) {
+		Result
+		.find(missing)
+		.limit(1)
+		.sort('no')
+		.exec(function(err, result){
+			cb(err, result);
+		});
 	}
 };
 
