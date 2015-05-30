@@ -94,7 +94,7 @@ var ResultView = Backbone.View.extend({
 				io.socket.get('/pick/missing', missing, function (resData) {
 					console.log('missing result', resData);
 					if (resData !== 'fail') {
-						self.add(resData.count, resData.name);
+						self.add(missing.round, resData.name);
 					}
 				});	
 			});
