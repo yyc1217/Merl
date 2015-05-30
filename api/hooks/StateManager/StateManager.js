@@ -232,9 +232,19 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 
 			roundIterator.giveUpIfNeccessary.call(roundIterator, maxResult);
 			roundIterator.addPicked.call(roundIterator, maxResult);
-			resultTable.addPicked.call(resultTable, {team : result.team, round: result.round, name: result.name});
+			
+			resultTable.addPicked.call(resultTable, {
+				team : result.team, 
+				round: result.round, 
+				name: result.name
+			});
 	
-			sails.sockets.blast('pick:result', maxResult);
+			sails.sockets.blast('pick:result', {
+				team : result.team, 
+				round: result.round, 
+				name: result.name,
+				count : maxResult.count
+			});
 			self.setMachineState(self.BREAK);
 		});
 	});

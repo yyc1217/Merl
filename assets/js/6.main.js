@@ -65,15 +65,13 @@ var ResultView = Backbone.View.extend({
 		Merl.dispatcher.on('pick:result', this.refresh, this);
     },
 	refresh: function(data) {
-		var count = data.count - 1;
-		var name = data.name;
-		this.add(count, name);
+		this.add(data.team, data.round, data.name);
 
 		this.fixIfMissing(count);
 	},
 
-	add: function (count, name) {
-		this.$el.find('td:nth(' + count + ')').addClass('picked').text(name);
+	add: function (team, round, name) {
+		this.$el.find('td[team=' + team + '][round=' + round + ']').addClass('picked').text(name);
 	},
 
 	fixIfMissing: function(count) {

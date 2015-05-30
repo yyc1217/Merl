@@ -90,7 +90,9 @@ module.exports = {
 				return res.send('fail');
 			}
 			var data = {
-				name : result[0] && result[0].name
+				team : result[0] && result[0].team,
+				name : result[0] && result[0].name,
+				round : result[0] && result[0].round
 			};
 			res.send(data);
 		});
