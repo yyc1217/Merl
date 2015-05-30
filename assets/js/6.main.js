@@ -83,8 +83,8 @@ var ResultView = Backbone.View.extend({
 		$('#result td').each(function(i, v) {
 			if (i < count && v.textContent === '') {
 				missings.push({
-					team : el.getAttribute('team'),
-					round : el.getAttribute('round')
+					team : v.getAttribute('team'),
+					round : v.getAttribute('round')
 				});
 			}
 		});
