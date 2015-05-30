@@ -21,6 +21,11 @@ module.exports = {
 			required: true,
 			columnName: 'host_date'
 		},
+		
+		name : {
+			type : 'string',
+			required : true
+		}
 	},
   
 	/**
