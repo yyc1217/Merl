@@ -70,5 +70,26 @@ module.exports = {
 			});
 		});
 
+	},
+	
+	missing: function (req, res) {
+		'use strict';
+		
+		if (!req.isSocket) {
+			sails.log.warn('欲使用socket以外的方式補遺', req.session);
+			return res.send(503);
+		}
+	
+		var missing = {
+			round : req.param('round'),
+			team : req.param('team')
+		};
+		
+		Result.findLatestByMissing(missing, function(err, result) {
+			if (err) {
+				return res.send('fail');
+			}
+			res.send(result);
+		});
 	}
 };

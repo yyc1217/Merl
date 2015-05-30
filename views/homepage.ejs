@@ -19,7 +19,7 @@
 						<tr>
 							<th><%= round %></th>
 							<% _.each(teams, function (team) { %>
-								<td class="<%= team.ename %>"><%= resultTable[team.ename][round] || '' %></td>
+								<td team="<%= team.ename %>" round="<%= round %>"><%= resultTable[team.ename][round] || '' %></td>
 							<% });%>
 						</tr>
 					<% } %>

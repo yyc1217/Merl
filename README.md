@@ -7,8 +7,8 @@
 - EJS, 產生頁面
 
 ## Development
-- 修改[connection.js](config/connections.js)裡的adapter, username和password
-- 修改[http.js](config/http.js)裡的clientID, clientSecret和callbackURL, 若要測試Facebook或Google+登入。
+- 修改[connection.js](config/connections.js)裡的host, database, username和password
+- 修改[http.js](config/http.js)裡的clientID, clientSecret和callbackURL, 若要測試Facebook或Google+登入的話。
 - 用`sails lift`, `node app.js`, `pm2 start app.js`, `forever start app.js`(如果使用pm2或forever)啟動server, 預設網址為localhost:1337
 
 ### Configurations
