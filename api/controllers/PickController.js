@@ -89,7 +89,10 @@ module.exports = {
 			if (err) {
 				return res.send('fail');
 			}
-			res.send(result);
+			var data = {
+				name : result[0] && result[0].name
+			};
+			res.send(data);
 		});
 	}
 };

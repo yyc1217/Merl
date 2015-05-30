@@ -41,7 +41,7 @@ module.exports = {
 		Result
 		.find(missing)
 		.limit(1)
-		.sort('no')
+		.sort('no DESC')
 		.exec(function(err, result){
 			cb(err, result);
 		});
