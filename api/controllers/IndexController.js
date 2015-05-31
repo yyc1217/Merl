@@ -48,7 +48,10 @@ module.exports = {
 			latestDraftTime : moment(req.latestDraft.createdAt).format('YYYY-MM-DD hh:mm'),
 			
 			// 最近一次的模擬選秀結果
-			latestDraftResult : req.latestDraftResult
+			latestDraftResult : req.latestDraftResult,
+
+			// official draft info
+			officialDraft : req.officialDraft
 		};
 
 		if (req.user) {
