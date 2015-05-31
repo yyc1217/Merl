@@ -376,7 +376,7 @@ var BulletinView = Backbone.View.extend({
 			},
 
 			'pause': function (data) {
-				return data.names.join(',') + ' 票數相同，將重新選秀。';
+				return '本輪結果為 ' + data.names.join(',') + '，因票數相同，將重新選秀。';
 			},
 
 			'wait': function (data) {
