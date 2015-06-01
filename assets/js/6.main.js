@@ -491,7 +491,7 @@ Merl.dispatcher.on('draft:restart', function(data) {
 });
 
 Merl.dispatcher.on('finished', function(data) {
-	if (data.countDownSeconds) {
+	if (data.countDownSeconds > 0) {
 		setTimeout(function() {
 			location.reload();
 		}, 	data.countDownSeconds * 1000);
