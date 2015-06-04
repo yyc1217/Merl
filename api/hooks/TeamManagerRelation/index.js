@@ -13,9 +13,10 @@ module.exports = function (sails) {
 		routes: {
 			before: {
 				'GET /': function loadTeamManager(req, res, next) {
-					sails.log.debug('載入 使用者/隊伍 關係');
-					sails.log.debug('req.user', req.user ? req.user.uid : ' undefined');
-					sails.log.debug('req.session.teamBelongsTo', req.session.teamBelongsTo);
+					
+					var user = req.user ? req.user.uid : ' undefined';
+					var team = req.session.teamBelongsTo;
+					sails.log.debug('載入 使用者/隊伍 關係', 'user', user, 'team', team);
 
 					// 未登入
 					if (req.user === undefined) {
