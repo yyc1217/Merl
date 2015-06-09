@@ -74,6 +74,7 @@ var ResultView = Backbone.View.extend({
 	},
 
 	fixIfMissing: function(count) {
+		return; //暫時不做補遺的動作
 		var missings = [];
 		var self = this;
 		
