@@ -43,7 +43,7 @@ module.exports = {
 		LoginLog.create(data)
 		.exec(function (err, newLog) {
 			if (err) {
-				sails.log.err(err);
+				sails.log.error(err);
 				return;
 			}
 			cb(newLog);
