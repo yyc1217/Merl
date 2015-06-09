@@ -16,11 +16,11 @@ module.exports = function (sails) {
 					
 					var user = req.user ? req.user.uid : ' undefined';
 					var team = req.session.teamBelongsTo;
-					sails.log.debug('載入 使用者/隊伍 關係', 'user', user, 'team', team);
+					sails.log.verbose('載入 使用者/隊伍 關係', 'user', user, 'team', team);
 
 					// 未登入
 					if (req.user === undefined) {
-						sails.log.debug('未登入，跳過此步驟');
+						sails.log.verbose('未登入，跳過此步驟');
 						req.session.notChoseATeamYet = null;
 						next();
 						return;
@@ -28,7 +28,7 @@ module.exports = function (sails) {
 
 					// 已選擇隊伍
 					if (req.session.teamBelongsTo !== undefined) {
-						sails.log.debug('已選擇隊伍，跳過此步驟');
+						sails.log.verbose('已選擇隊伍，跳過此步驟');
 						req.session.notChoseATeamYet = null;
 						next();
 						return;
