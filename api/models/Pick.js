@@ -31,7 +31,29 @@ module.exports = {
 		name : 'string',
 
 		/* 使用者id */
-		uid : 'string'
+		uid : 'string',
+		
+		/* 已刪除的投單。可能為該輪次有票數相同的情況，則前一次投單要作廢 */
+		isDeleted: {
+			type: 'boolean',
+			columnName: 'is_deleted',
+			defaultsTo: false
+		}
+	},
+	
+	revokePrevious : function (previousPick, cb) {
+		
+		var sql = ' UPDATE pick SET isDeleted = true '
+				+ ' WHERE team = \'' + previousPick.team + '\''
+				+ ' AND round = ' + previousPick.round
+				+ ' AND draftNo = ' + previousPick.draftNo
+				+ ' AND isDeleted = false';
+				
+		sails.log.debug('撤銷前一次投單, sql=', sql);
+		
+		Pick.query(sql, function(err, results) {
+			cb(err, results);
+		});
 	}
 };
 

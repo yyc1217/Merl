@@ -190,9 +190,9 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 			+ ' AND round = ' + round.round
 			+ ' GROUP BY name '
 			+ ' ORDER BY count(*) DESC ';
-
-	sails.log.info('計算中...');
+			
 	sails.log.debug('SQL：', sql);
+	sails.log.info('計算中...');
 
 	Pick.query(sql, function queryPick(err, results) {
 
@@ -209,10 +209,25 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 		if (duplicateResults.length > 1) {
 			sails.log.info('重覆的選秀結果：', _.pluck(duplicateResults, 'name'));
 			roundIterator.prev();
-			sails.sockets.blast('pick:duplicate', {names: _.pluck(duplicateResults, 'name')});
-			setTimeout(function () {
-				self.setMachineState(self.WAIT);
-			}, 10000);
+			
+			Pick.revokePrevious({
+				team : round.team.ename,
+				round : round.round,
+				draftNo : manager.initData.draft.no
+			}, function afterRevokePreviousPick (revokeErr, results) {
+				
+				if (revokeErr) {
+					sails.log.error(revokeErr);
+					return;
+				}
+
+				sails.log.debug('撤銷前一次投單執行結果：', results);
+				
+				sails.sockets.blast('pick:duplicate', {names: _.pluck(duplicateResults, 'name')});
+				setTimeout(function () {
+					self.setMachineState(self.WAIT);
+				}, 10000);
+			});
 			return;
 		}
 		
