@@ -162,6 +162,13 @@ manager.onWAIT = function (event, oldStage, newStage) {
 	
 	sails.sockets.blast('pick:start', round);
 	
+	// 前10秒校正
+	setTimeout(function () {
+		sails.sockets.blast('calibrate', {
+			countDownSeconds: 10
+		});		
+	}, countDown - 10000);
+	
 	setTimeout(function () {
 		sails.sockets.blast('pick:stop');
 		self.setMachineState(self.CALCULATE);
