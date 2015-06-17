@@ -46,8 +46,8 @@ module.exports = {
 		var sql = ' UPDATE pick SET isDeleted = true '
 				+ ' WHERE team = \'' + previousPick.team + '\''
 				+ ' AND round = ' + previousPick.round
-				+ ' AND draftNo = ' + previousPick.draftNo
-				+ ' AND isDeleted = false';
+				+ ' AND draft_no = ' + previousPick.draftNo
+				+ ' AND is_deleted = false';
 				
 		sails.log.debug('撤銷前一次投單, sql=', sql);
 		
