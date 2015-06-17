@@ -43,7 +43,7 @@
 								<% _.each(group, function (candidate) { %>
 									<% var className = 'candidate ' + (_.find(pickedCandidates, {name: candidate.name}) ? 'picked' : ''); %>
 									<% var ignoreTeams = ignoreCandidates[candidate.name] ? _.pluck(ignoreCandidates[candidate.name], 'team').join(' ') : ''; %>
-									<td class='<%= className %>' ignoreTeams='<%= ignoreTeams %>'><%= candidate.name %></td>
+									<td class='<%= className %>' ignoreteams='<%= ignoreTeams %>'><%= candidate.name %></td>
 								<% }); %>
 								<% for (var offset = 0; offset < (numOfGroup - group.length); offset++) { %>
 									<td class=forbidden ></td>
