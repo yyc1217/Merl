@@ -188,6 +188,7 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 			+ ' WHERE draft_no = ' + manager.initData.draft.no
 			+ ' AND team = \'' + round.team.ename + '\' '
 			+ ' AND round = ' + round.round
+			+ ' AND is_deleted = false '
 			+ ' GROUP BY name '
 			+ ' ORDER BY count(*) DESC ';
 			
