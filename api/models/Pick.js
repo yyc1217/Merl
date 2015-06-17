@@ -43,7 +43,7 @@ module.exports = {
 	
 	revokePrevious : function (previousPick, cb) {
 		
-		var sql = ' UPDATE pick SET isDeleted = true '
+		var sql = ' UPDATE pick SET is_deleted = true '
 				+ ' WHERE team = \'' + previousPick.team + '\''
 				+ ' AND round = ' + previousPick.round
 				+ ' AND draft_no = ' + previousPick.draftNo
