@@ -151,8 +151,8 @@ var SlateView = Backbone.View.extend({
 		this.$el
 		.find('.candidate:not(.picked)')
 		.filter(function (index, td) {
-			var ignoreTeams = $(td).attr('ignoreTeams') || '';
-			return ignoreTeams.indexOf(data.team) < 0;
+			var ignoreTeams = $(td).attr('ignoreteams') || '';
+			return ignoreTeams.indexOf(data.team.ename) < 0;
 		})
 		.addClass('chosenable');
 		return this;
