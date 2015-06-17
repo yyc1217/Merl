@@ -301,7 +301,9 @@ manager.onFINISHED = function (event, oldStage, newStage) {
 		sails.log.info('下次選秀將在 ' + serverRestartSeconds + ' 秒鐘後開始');
 		sails.log.info('使用者將在 ' + clientRestartSeconds + ' 秒鐘後重新整理\n\n');
 		
-		sails.sockets.blast('draft:restart', {countDownSeconds: clientRestartSeconds});
+		sails.sockets.blast('draft:restart', {
+			countDownSeconds: clientRestartSeconds
+		});
 		
 		setTimeout(function () {
 			self.setMachineState(self.INIT);

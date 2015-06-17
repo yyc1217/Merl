@@ -103,6 +103,8 @@ module.exports = {
 			
 			if (sails.config.environment == 'development') {
 				resData.countDownSeconds = sails.config.draft.restartDraftSeconds;
+			} else {
+				resData.countDownSeconds = null;
 			}
 		}
 
