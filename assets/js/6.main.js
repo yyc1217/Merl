@@ -234,7 +234,7 @@ var StopWatchView = Backbone.View.extend({
 	},
 
 	end: function (data) {
-		data.countDownSeconds && this.restart(data);
+		data && data.countDownSeconds && this.restart(data);
 	},
 
 	countDown: function (timeInSeconds) {
