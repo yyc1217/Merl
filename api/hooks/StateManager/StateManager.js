@@ -203,7 +203,9 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 		}
 		sails.log.debug('計算結果：', results.rows);
 
-		var maxResult = _.max(results.rows, function (row) {return row.count; });
+		var maxResult = _.max(results.rows, function (row) {
+			return parseInt(row.count, 10); 
+		});
 		var duplicateResults = _.where(results.rows, {count: maxResult.count});
 
 		// 如果有兩個以上結果有相同票數，則重來
