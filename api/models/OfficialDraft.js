@@ -32,7 +32,7 @@ module.exports = {
 		找出最新一筆
 	*/
 	findLatestOne: function(cb) {
-		OfficialDraft.find().limit(1).sort('hostDate')
+		OfficialDraft.find().limit(1).sort('hostDate DESC')
 		.exec(function(err, latestOfficialDraft){
 			cb(err, latestOfficialDraft[0]);
 		});	
