@@ -37,7 +37,8 @@ module.exports = {
 		var submitPick = {
 			round: req.param('round'),
 			draftNo: req.param('draftNo'),
-			uid: userId
+			uid: userId,
+			isDeleted: false
 		};
 		
 		sails.log.debug('預防重覆投單 ', submitPick);
