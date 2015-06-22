@@ -432,7 +432,7 @@ var BulletinView = Backbone.View.extend({
 	},
 
 	end: function (data) {
-		data.countDownSeconds ? this.announce('restart', data) : this.announce('end');
+		data && data.countDownSeconds ? this.announce('restart', data) : this.announce('end');
 	}
 });
 
