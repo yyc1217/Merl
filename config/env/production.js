@@ -14,9 +14,9 @@ var moment = require('moment');
 module.exports = {
 
    /**
-    * TODO 應該是某個時間點才開始選秀才對
+    * 某個時間點
     */
    startDraftTime : function startDraftTime() {
-      return moment().add(1200, 'seconds');
+      return moment('2015-06-23 20:00:00');
    }
 };
