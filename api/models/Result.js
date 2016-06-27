@@ -28,7 +28,7 @@ module.exports = {
 		team : 'string',
 
 		/* 幾個人選 */
-		count: 'integer',
+		amount: 'integer',
 
 		/* 被選的人 */
 		name : 'string'

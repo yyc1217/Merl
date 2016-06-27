@@ -4,6 +4,12 @@
 /// <reference path="../../typings/backbone/backbone.d.ts"/>
 'use strict';
 
+if (typeof console == "undefined") {
+    window.console = {
+        log: function () {}
+    };
+}
+
 var Merl = {};
 
 Merl.translate = (function () {
@@ -373,11 +379,15 @@ var BulletinView = Backbone.View.extend({
 			},
 
 			'result': function (data) {
-				return '本輪結果：' + data.name;
+				var str = '本輪結果：' + data.name;
+				if (data.total !== 0) {
+					str += '，' + data.amount + '票(共' + data.total + '票)';
+				}
+				return str;
 			},
 
 			'pause': function (data) {
-				return '本輪結果為' + data.names.join(',') + '，因票數相同，將重新選秀。';
+				return '本輪結果為' + data.names.join('/') + '，因皆為' + data.amount + '票(共' + data.total + '票)，本輪將重新開始。';
 			},
 
 			'wait': function (data) {

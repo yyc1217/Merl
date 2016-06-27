@@ -183,7 +183,7 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 
 	var round = roundIterator.current(),
 		self = this,
-		sql = ' SELECT name, count(*) '
+		sql = ' SELECT name, count(*) AS amount'
 			+ ' FROM pick '
 			+ ' WHERE draft_no = ' + manager.initData.draft.no
 			+ ' AND team = \'' + round.team.ename + '\' '
@@ -201,12 +201,17 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 			sails.log.error(err);
 			return;
 		}
-		sails.log.debug('計算結果：', results.rows);
+		sails.log.debug('計算結果：', results);
 
-		var maxResult = _.max(results.rows, function (row) {
-			return parseInt(row.count, 10); 
+		var maxResult = _.max(results, function (result) {
+			return parseInt(result.amount, 10); 
 		});
-		var duplicateResults = _.where(results.rows, {count: maxResult.count});
+
+		var total = _.reduce(results, function(sum, result) {
+			return sum += parseInt(result.amount, 10);
+		}, 0);
+
+		var duplicateResults = _.where(results, { amount: maxResult.amount });
 
 		// 如果有兩個以上結果有相同票數，則重來
 		if (duplicateResults.length > 1) {
@@ -226,7 +231,11 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 
 				sails.log.debug('撤銷前一次投單執行結果：', results);
 				
-				sails.sockets.blast('pick:duplicate', {names: _.pluck(duplicateResults, 'name')});
+				sails.sockets.blast('pick:duplicate', {
+					names: _.pluck(duplicateResults, 'name'),
+					amount: maxResult.amount,
+					total: total
+				});
 				setTimeout(function () {
 					self.setMachineState(self.WAIT);
 				}, 10000);
@@ -238,7 +247,7 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 
 		var result = {
 			name : maxResult.name,
-			count : maxResult.count || 0, // 有幾個人選
+			amount : maxResult.amount || 0, // 有幾個人選
 			team : round.team.ename,
 			round : round.round,
 			draftNo : manager.initData.draft.no
@@ -253,7 +262,7 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 			}
 
 			maxResult.count = round.count; //目前選秀到第幾個
-			sails.log.info('picked', maxResult);
+			sails.log.info('選擇了', maxResult);
 
 			roundIterator.giveUpIfNeccessary.call(roundIterator, maxResult);
 			roundIterator.addPicked.call(roundIterator, maxResult);
@@ -266,9 +275,11 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 	
 			sails.sockets.blast('pick:result', {
 				team : result.team, 
-				round: result.round, 
-				name: result.name,
-				count : maxResult.count
+				round : result.round, 
+				name : result.name,
+				count : maxResult.count,
+				amount : result.amount || 0,
+				total : total
 			});
 			self.setMachineState(self.BREAK);
 		});
@@ -281,7 +292,7 @@ manager.onCALCULATE = function (event, oldStage, newStage) {
 manager.onBREAK = function (event, oldStage, newStage) {
 	'use strict';
 
-	sails.log.info('Take a break for ' + 10 + ' seconds.');
+	sails.log.info('休息 ' + 10 + ' 秒鐘');
 	var self = this;
 	var nextStage = roundIterator.hasNext() ? this.WAIT : this.FINISHED;
 
