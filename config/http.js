@@ -18,18 +18,18 @@ var verifyHandler = function (accessToken, refreshToken, profile, done) {
 	sails.log.debug('Verifying login user.');
 	sails.log.debug('AccessToken', accessToken);
 	sails.log.debug('refreshToken', refreshToken);
-	sails.log.debug('profile', profile);
+	sails.log.debug('profile', JSON.stringify(profile));
 
 	process.nextTick(function () {
 
 		User.findOne({uid: profile.id}, function (err, user) {
 
 			if (user) {
-				sails.log.debug('User ' + user.uid + ' already exist.');
+				sails.log.debug('使用者 ' + user.uid + ' 已存在');
 				return done(null, user);
 			}
 
-			sails.log.debug('Creating a new user.');
+			sails.log.debug('建立新使用者', profile.id);
 			var data = {
 				provider: profile.provider,
 				uid : profile.id,
@@ -50,7 +50,7 @@ var verifyHandler = function (accessToken, refreshToken, profile, done) {
 			}
 
 			User.create(data, function (error, usr) {
-				sails.log.debug('User created. ', usr);
+				sails.log.debug('已建立使用者 ', usr);
 				return done(error, usr);
 			});
 		});
@@ -133,15 +133,15 @@ module.exports.http = {
 		passport.use(new FacebookStrategy({
 			clientID: '',
 			clientSecret: '',
-			callbackURL: 'http://{yourIp}/auth/facebook/callback'
+			callbackURL: 'http://merl.tw/auth/facebook/callback'
 		}, verifyHandler));
-		
+
 		passport.use(new GoogleStrategy({
 			clientID: '',
 			clientSecret: '',
-			callbackURL: 'http://{yourIp}/auth/google/callback'
+			callbackURL: 'http://merl.tw/auth/google/callback'
 		}, verifyHandler));
-		
+
 		app.use(passport.initialize());
 		app.use(passport.session());
     },

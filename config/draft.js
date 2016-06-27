@@ -23,7 +23,7 @@ module.exports.draft = {
 	/**
 	 * 每個輪次等待的秒數
 	 */ 
-    waitPickSeconds: 30,
+	waitPickSeconds: 30,
 	
 	/**
 	 * 下次模擬選秀，server重新開始的秒數
