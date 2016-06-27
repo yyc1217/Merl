@@ -68,7 +68,7 @@ var initSteps = function() {
 				}
 				
 				// skip if no drafts exist
-				if (draft == null) {
+				if (_.isEmpty(draft)) {
 					sails.log.info('沒有最新一次的模擬選秀結果，官方選秀編號 #' + results.officialDraft.no);
 					cb(null, results);
 				} else {

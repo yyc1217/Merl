@@ -41,18 +41,21 @@ module.exports = {
 			// 需要被隊伍忽略的球員
 			ignoreCandidates : req.ignoreCandidates,
 			
-			// 接下來最新的選秀資訊
-			latestDraft : req.latestDraft,
-
-			// 接下來最新的選秀時間
-			latestDraftTime : moment(req.latestDraft.createdAt).format('YYYY-MM-DD hh:mm'),
-			
 			// 最近一次的模擬選秀結果
 			latestDraftResult : req.latestDraftResult,
 
 			// official draft info
 			officialDraft : req.officialDraft
 		};
+
+		if (req.latestDraft) {
+
+			// 接下來最新的選秀資訊
+			renderData.latestDraft : req.latestDraft;
+
+			// 接下來最新的選秀時間
+			renderData.latestDraftTime : moment(req.latestDraft.createdAt).format('YYYY-MM-DD hh:mm');
+		}
 
 		if (req.user) {
 			renderData.user = req.user;
